@@ -6,23 +6,21 @@ User will press button
 light will fade on for set duration
 and then the light will fade out.
 
-requires the SimpleTimer Library
-(included in the Git Repo)
-https://github.com/grandmaster-B/Arduino-LedDimmer-for-Exhibits-Case
+
 
 Developed by Bob Belote for the Field Museum 2017
 bbelote@gmail.com
 ***********************************/
 
-#include <SimpleTimer.h>
-
-SimpleTimer timer;
 
 int led = 9; //pin for the LED
 int button = 10; //pin for the button
 
 int brightness; //value between 0 and 255 for PWM led intensity
 int fadeAmount = 5; //step to increment the PWM
+
+unsigned long previousMillis = 0;
+const long resetTime = 12000;
 
 bool lightOn;
 
@@ -41,19 +39,22 @@ void setup()
 	analogWrite(led, brightness);
 
 	Serial.begin(9600);
-	timer.setInterval(1000, repeatMe);
 }
 
 void loop() 
 {
-	timer.run(); //Runs Timer Logic from the Library
-
+	unsigned long currentMillis = millis();
 
 	//Checls for button Hit to start LED fade in
 	if (digitalRead(button) == LOW && lightOn == false) 
 	{
 		lightOn == true;
-		timer.setInterval(10000, LightsOut);
+		previousMillis = currentMillis;
+	}
+
+	if (lightOn == true && currentMillis - previousMillis >= resetTime)
+	{
+		lightOn == false;
 	}
 
 	if (lightOn == true && brightness < 255)
@@ -65,7 +66,6 @@ void loop()
 	{
 		FadeOff();
 	}
-
 }
 
 //method called to increase the brightness value of the PWM
@@ -88,11 +88,4 @@ void FadeOff()
 void LightsOut()
 {
 	lightOn = false;
-}
-
-//Method for the Timer Lib
-void repeatMe() 
-{
-	//Serial.print("Uptime (s): ");
-	//Serial.println(millis() / 1000);
 }
