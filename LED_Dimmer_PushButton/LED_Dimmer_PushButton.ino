@@ -18,10 +18,10 @@ int buttonPressLED = 2;
 int brightness; //value between 0 and 255 for PWM led intensity
 int fadeAmount = 1; //step to increment the PWM
 
-unsigned long previousMillis = 0;
-const long resetTime = 8000;
+unsigned long previousMillis = 0; //stores the millis count for the timer function
+const long resetTime = 8000; //led on duration in miliseconds
 
-bool lightOn;
+bool lightOn; //gates the light state
 
 
 void setup() 
@@ -42,7 +42,7 @@ void setup()
 
 void loop() 
 {
-	unsigned long currentMillis = millis();
+	unsigned long currentMillis = millis(); //holds the current millis value
 
 	//Checls for button Hit to start LED fade in
 	if (digitalRead(button) == HIGH && lightOn == false) 
@@ -51,14 +51,13 @@ void loop()
 		lightOn = true; //sets light state for on
 		previousMillis = currentMillis;
 		brightness = 0; //resets brightness to base for smooth fade on
-		//Serial.print(" LightOn True ");
 	}
 
+	//when reset duration has elapsed this will set the light state to off
+	//and begin the led fadout out process.
 	if (lightOn == true && currentMillis - previousMillis >= resetTime)
 	{
 		lightOn = false;
-		//Serial.print(" LightOn false ");
-		//digitalWrite(led, LOW);
 	}
 
 	//calls led fade on method while brightness is below threshhold
