@@ -50,7 +50,7 @@ void loop()
 
 
 	//Checls for button Hit to start LED fade in
-	if (digitalRead(button) == HIGH && lightOn == false) 
+	if (digitalRead(button) == LOW && lightOn == false) 
 	{
 		lightOn == true;
 		timer.setInterval(10000, LightsOut);
@@ -93,6 +93,6 @@ void LightsOut()
 //Method for the Timer Lib
 void repeatMe() 
 {
-	Serial.print("Uptime (s): ");
-	Serial.println(millis() / 1000);
+	//Serial.print("Uptime (s): ");
+	//Serial.println(millis() / 1000);
 }
