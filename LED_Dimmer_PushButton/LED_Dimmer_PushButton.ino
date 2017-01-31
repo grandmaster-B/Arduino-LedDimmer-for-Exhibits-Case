@@ -16,10 +16,10 @@ int button = 8; //pin for the button
 int buttonPressLED = 2;
 
 int brightness; //value between 0 and 255 for PWM led intensity
-int fadeAmount = 5; //step to increment the PWM
+int fadeAmount = 1; //step to increment the PWM
 
 unsigned long previousMillis = 0;
-const long resetTime = 12000;
+const long resetTime = 8000;
 
 bool lightOn;
 
@@ -44,45 +44,40 @@ void loop()
 {
 	unsigned long currentMillis = millis();
 
-	//Serial.print(digitalRead(button));
-
-	if (digitalRead(button) == HIGH)
-	{
-		digitalWrite(buttonPressLED, HIGH);
-		//FadeIn();
-	}
-	else if (digitalRead(button) == LOW)
-	{
-		digitalWrite(buttonPressLED, LOW);
-	}
-
 	//Checls for button Hit to start LED fade in
 	if (digitalRead(button) == HIGH && lightOn == false) 
 	{
 		delay(10);
-		lightOn == true;
+		lightOn = true;
 		previousMillis = currentMillis;
-		//Serial.print(" Button Press ");
+		Serial.print(" LightOn True ");
+		//(led, HIGH);
 	}
 
 	if (lightOn == true && currentMillis - previousMillis >= resetTime)
 	{
-		lightOn == false;
+		lightOn = false;
+		Serial.print(" LightOn false ");
+		//digitalWrite(led, LOW);
 	}
 
-	if (lightOn == true && brightness < 255)
+	if (lightOn == true && brightness < 175)
 	{
-		analogWrite(led, brightness);
-		brightness += fadeAmount;
-		delay(30);
+		FadeOn();
 	}
 
 	if (lightOn == false && brightness > 0) 
 	{
-		analogWrite(led, brightness);
-		brightness -= fadeAmount;
-		delay(30);
+		FadeOff();
 	}
+
+	if (lightOn == false && brightness <= 0)
+	{
+		digitalWrite(led, LOW);
+	}
+	
+	//Serial.print(brightness);
+	//Serial.print("\t");
 }
 
 //method called to increase the brightness value of the PWM
@@ -90,7 +85,7 @@ void FadeOn()
 {
 	analogWrite(led, brightness);
 	brightness += fadeAmount;
-	delay(30);
+	delay(20);
 }
 
 //method called to decrease the brightness value of the PWM
@@ -98,11 +93,5 @@ void FadeOff()
 {
 	analogWrite(led, brightness);
 	brightness -= fadeAmount;
-	delay(30);
-}
-
-//method called to change the light state at the end of the Timer
-void LightsOut()
-{
-	lightOn = false;
+	delay(20);
 }
