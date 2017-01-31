@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LED_Dimmer_PushButton", "LE
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dimmer test", "..\..\..\Arduino\Dimmer test\Dimmer test.vcxproj", "{1289BDCE-9903-4E19-93D0-7A63BDA6713D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "button Test", "..\..\..\Arduino\button Test\button Test.vcxproj", "{E9C67242-5D56-4D25-B544-4BB880E20D82}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -21,6 +23,10 @@ Global
 		{1289BDCE-9903-4E19-93D0-7A63BDA6713D}.Debug|x86.Build.0 = Debug|Win32
 		{1289BDCE-9903-4E19-93D0-7A63BDA6713D}.Release|x86.ActiveCfg = Release|Win32
 		{1289BDCE-9903-4E19-93D0-7A63BDA6713D}.Release|x86.Build.0 = Release|Win32
+		{E9C67242-5D56-4D25-B544-4BB880E20D82}.Debug|x86.ActiveCfg = Debug|Win32
+		{E9C67242-5D56-4D25-B544-4BB880E20D82}.Debug|x86.Build.0 = Debug|Win32
+		{E9C67242-5D56-4D25-B544-4BB880E20D82}.Release|x86.ActiveCfg = Release|Win32
+		{E9C67242-5D56-4D25-B544-4BB880E20D82}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

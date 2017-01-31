@@ -6,15 +6,14 @@ User will press button
 light will fade on for set duration
 and then the light will fade out.
 
-
-
 Developed by Bob Belote for the Field Museum 2017
 bbelote@gmail.com
 ***********************************/
 
 
 int led = 9; //pin for the LED
-int button = 10; //pin for the button
+int button = 8; //pin for the button
+int buttonPressLED = 2;
 
 int brightness; //value between 0 and 255 for PWM led intensity
 int fadeAmount = 5; //step to increment the PWM
@@ -45,11 +44,25 @@ void loop()
 {
 	unsigned long currentMillis = millis();
 
-	//Checls for button Hit to start LED fade in
-	if (digitalRead(button) == LOW && lightOn == false) 
+	//Serial.print(digitalRead(button));
+
+	if (digitalRead(button) == HIGH)
 	{
+		digitalWrite(buttonPressLED, HIGH);
+		//FadeIn();
+	}
+	else if (digitalRead(button) == LOW)
+	{
+		digitalWrite(buttonPressLED, LOW);
+	}
+
+	//Checls for button Hit to start LED fade in
+	if (digitalRead(button) == HIGH && lightOn == false) 
+	{
+		delay(10);
 		lightOn == true;
 		previousMillis = currentMillis;
+		//Serial.print(" Button Press ");
 	}
 
 	if (lightOn == true && currentMillis - previousMillis >= resetTime)
@@ -59,12 +72,16 @@ void loop()
 
 	if (lightOn == true && brightness < 255)
 	{
-		FadeOn();
+		analogWrite(led, brightness);
+		brightness += fadeAmount;
+		delay(30);
 	}
 
 	if (lightOn == false && brightness > 0) 
 	{
-		FadeOff();
+		analogWrite(led, brightness);
+		brightness -= fadeAmount;
+		delay(30);
 	}
 }
 
