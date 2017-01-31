@@ -47,40 +47,36 @@ void loop()
 	//Checls for button Hit to start LED fade in
 	if (digitalRead(button) == HIGH && lightOn == false) 
 	{
-		delay(10);
-		lightOn = true;
+		delay(10); //debounce pause for button press
+		lightOn = true; //sets light state for on
 		previousMillis = currentMillis;
-		Serial.print(" LightOn True ");
-		//(led, HIGH);
+		brightness = 0; //resets brightness to base for smooth fade on
+		//Serial.print(" LightOn True ");
 	}
 
 	if (lightOn == true && currentMillis - previousMillis >= resetTime)
 	{
 		lightOn = false;
-		Serial.print(" LightOn false ");
+		//Serial.print(" LightOn false ");
 		//digitalWrite(led, LOW);
 	}
 
+	//calls led fade on method while brightness is below threshhold
+	//set brightness value here (0-255) to determine max brightness
 	if (lightOn == true && brightness < 175)
 	{
 		FadeOn();
 	}
 
-	if (lightOn == false && brightness > 0) 
+	//when lightOn bool is set to false this calls the led fade off method
+	if (lightOn == false && brightness >= 0) 
 	{
 		FadeOff();
 	}
-
-	if (lightOn == false && brightness <= 0)
-	{
-		digitalWrite(led, LOW);
-	}
-	
-	//Serial.print(brightness);
-	//Serial.print("\t");
 }
 
 //method called to increase the brightness value of the PWM
+//change the fade amount or delay to adjust fade speed
 void FadeOn() 
 {
 	analogWrite(led, brightness);
@@ -89,6 +85,7 @@ void FadeOn()
 }
 
 //method called to decrease the brightness value of the PWM
+//change the fade amount or delay to adjust fade speed
 void FadeOff()
 {
 	analogWrite(led, brightness);
