@@ -11,8 +11,8 @@ bbelote@gmail.com
 ***********************************/
 
 
-int led = 9; //pin for the LED
-int button = 8; //pin for the button
+int led = 11; //pin for the LED
+int button = 13; //pin for the button
 int buttonPressLED = 2;
 
 int brightness; //value between 0 and 255 for PWM led intensity
