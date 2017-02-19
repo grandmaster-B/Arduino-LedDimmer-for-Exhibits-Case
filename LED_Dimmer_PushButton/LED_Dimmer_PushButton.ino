@@ -19,7 +19,7 @@ int brightness; //value between 0 and 255 for PWM led intensity
 int fadeAmount = 1; //step to increment the PWM
 
 unsigned long previousMillis = 0; //stores the millis count for the timer function
-const long resetTime = 8000; //led on duration in miliseconds
+const long resetTime = 9000; //led on duration in miliseconds
 
 bool lightOn; //gates the light state
 
@@ -62,7 +62,7 @@ void loop()
 
 	//calls led fade on method while brightness is below threshhold
 	//set brightness value here (0-255) to determine max brightness
-	if (lightOn == true && brightness < 175)
+	if (lightOn == true && brightness < 5)
 	{
 		FadeOn();
 	}
@@ -80,7 +80,7 @@ void FadeOn()
 {
 	analogWrite(led, brightness);
 	brightness += fadeAmount;
-	delay(20);
+	delay(50);
 }
 
 //method called to decrease the brightness value of the PWM
@@ -89,5 +89,5 @@ void FadeOff()
 {
 	analogWrite(led, brightness);
 	brightness -= fadeAmount;
-	delay(20);
+	delay(50);
 }
